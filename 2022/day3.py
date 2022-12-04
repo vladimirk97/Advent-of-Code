@@ -41,8 +41,7 @@ def part2(input_lines):
     print(total_priority)  
     
 
-with open('Input/day3.txt') as input:
-    input_lines = input.readlines()
+input_lines = open('Input/day1.txt').readlines()
 
 # Run
 part1(input_lines)

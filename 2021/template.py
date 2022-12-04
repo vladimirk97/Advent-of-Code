@@ -1,10 +1,10 @@
-def part1(input):
+def part1(input_lines):
 
-# def part2(input):
+# def part2(input_lines):
 
 
 # Run
-input = open('Input/day1.txt').readlines()
+input_lines = open('Input/day1.txt').readlines()
 
-part1(input)
-# part2(input)
+part1(input_lines)
+# part2(input_lines)
