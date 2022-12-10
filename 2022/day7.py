@@ -1,66 +1,53 @@
 class Directory:
-  def __init__(self, name, file_sizes):
+  total_size = 0
+
+  def __init__(self, name, file_sizes, parent=None):
     self.name = name
-    self.sub_dirs = []
+    self.parent = parent
+    self.sub_dirs = set()
     self.file_sizes = int(file_sizes)
 
-  # def get_sizes(self):
-  #   if self.sub_dirs != None:
-  #     print(globals()[self].sub_dirs.file_sizes)
-  #   return
+  def add_subdir(self, sub_dir):
+    self.sub_dirs.add(sub_dir)
+
+  def get_size(self):
+    size = self.file_sizes
+    for sub in self.sub_dirs:
+      size += sub.get_size()
+    if size <= 100000: Directory.total_size += size
+    return size
 
 
 def part1(input_lines):
-  filesystem = []
-  path = []
-
-  # input_string = "test"
-  # locals()[input_string] = "testing string"
-
-  # print(locals()[input_string])
-
-  curr_dir = ""
+  root = Directory('/', 0)
+  curr_dir = root
 
   for line in input_lines:
     match line.split():
       case ['$', 'ls']:
         pass
       case ['$', 'cd', '/']:
-        root = Directory('root', 0)
-        filesystem.append(root)
-
+        curr_dir = root
       case ['$', 'cd', '..']:
-        path.pop()
+        curr_dir = curr_dir.parent
       case ['$', 'cd', next_dir]:
-        curr_dir = next_dir
-        path.append(next_dir)
-        locals()[next_dir] = Directory(next_dir, 1)
-        filesystem.append(locals()[next_dir])
-      case ['dir', dir]: pass
-        # print("s")
-        # locals()[curr_dir].sub_dirs.append(dir)
-      case [size, name]: pass
+        for sub in curr_dir.sub_dirs:
+          if sub.name == next_dir:
+            curr_dir = sub
+        else: curr_dir = curr_dir 
+      case ['dir', dir]:
+        curr_dir.add_subdir(Directory(dir, 0, curr_dir))
+      case [size, _]:
+        curr_dir.file_sizes += int(size)
       case _: pass
 
-
-
-
-  # root = Directory("root", 0)
-  # absolute_path = ["root"]
-  # root.sub_dirs = 'a'
-  # # root.sub_dirs.append("b")
-  # root.file_sizes += 20
-  # test = "a"
-
-  # filesystem.append(root)
-  for i in range(len(filesystem)):
-    print(filesystem[i].file_sizes)
-
+  root.get_size()
+  print(Directory.total_size)
 
 # def part2(input_lines):
 
 
-input_lines = open('Input/test.txt').readlines()
+input_lines = open('Input/day7.txt').readlines()
 
 # Run
 part1(input_lines)

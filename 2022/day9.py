@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 def part1(input_lines):
-  tail_positions = [[0,0]]
+  tail_positions = set((0,0))
   head_xy = [0,0]
   tail_xy = [0,0]
 
@@ -25,14 +25,13 @@ def part1(input_lines):
         if diff[0] == 1:
           tail_xy[0] = head_xy[0]
 
-      if [tail_xy[0], tail_xy[1]] not in tail_positions: 
-        tail_positions.append([tail_xy[0], tail_xy[1]])
+      tail_positions.add(tuple(tail_xy))
 
   print("Part 1: ", len(tail_positions))
 
 
 def part2(input_lines):
-  tail_positions = [[0,0]]
+  tail_positions = set((0,0))
   knots_xy = []
   for _ in range(10): knots_xy.append([0,0])
 
@@ -46,6 +45,7 @@ def part2(input_lines):
 
       for i in range(1, len(knots_xy)):
         diff = [abs(x - y) for x, y in zip(knots_xy[i-1], knots_xy[i])] 
+        
         if diff[0] > 1: 
           knots_xy[i][0] += int((knots_xy[i-1][0] - knots_xy[i][0]) / 2)
           if diff[1] == 1:
@@ -55,9 +55,8 @@ def part2(input_lines):
           knots_xy[i][1] += int((knots_xy[i-1][1] - knots_xy[i][1]) / 2)
           if diff[0] == 1:
             knots_xy[i][0] = knots_xy[i-1][0]
-
-      if [knots_xy[9][0], knots_xy[9][1]] not in tail_positions: 
-        tail_positions.append([knots_xy[9][0], knots_xy[9][1]])
+      
+      tail_positions.add(tuple(knots_xy[9]))
 
   print("Part 2: ", len(tail_positions))
 
