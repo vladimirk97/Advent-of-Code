@@ -1,18 +1,18 @@
 class Directory:
   def __init__(self, name, file_sizes):
     self.name = name
-    self.sub_dirs = self
+    self.sub_dirs = []
     self.file_sizes = int(file_sizes)
 
-  def get_sizes(self):
-    if self.sub_dirs != None:
-      print(globals()[self].sub_dirs.file_sizes)
-    return
+  # def get_sizes(self):
+  #   if self.sub_dirs != None:
+  #     print(globals()[self].sub_dirs.file_sizes)
+  #   return
 
 
 def part1(input_lines):
   filesystem = []
-  path = ""
+  path = []
 
   # input_string = "test"
   # locals()[input_string] = "testing string"
@@ -28,7 +28,7 @@ def part1(input_lines):
       case ['$', 'cd', '/']:
         root = Directory('root', 0)
         filesystem.append(root)
-        path = "root"
+
       case ['$', 'cd', '..']:
         path.pop()
       case ['$', 'cd', next_dir]:
@@ -55,29 +55,6 @@ def part1(input_lines):
   # filesystem.append(root)
   for i in range(len(filesystem)):
     print(filesystem[i].file_sizes)
-  
-  # a = Directory("a", 0)
-  # a.file_sizes += 10
-  
-  # root.get_sizes()
-
-  # globals()[test] = Directory(test, 1)
-  # globals()[test].sub_dirs.append("asd")
-  # print(globals()[test].file_sizes)
-  # print(globals()[test].sub_dirs)
-
-  # print(root.sub_dirs)
-
-  # for line in input_lines:
-  #   match line.split():
-  #     case ['$', 'ls']:
-  #       pass
-  #     case ['$', 'cd', '/']:
-
-
-
-  # system = []
-  # for lines in input_lines:
 
 
 # def part2(input_lines):
