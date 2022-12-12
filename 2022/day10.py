@@ -13,11 +13,13 @@ class CathodeRayTube():
       self.pixels.append('#')
     else:
       self.pixels.append('.')
+    
+    if self.cycle % 40 == 0:
+      print("".join(self.pixels))
+      self.pixels.clear()
 
     if self.cycle in CathodeRayTube.cycles:
       self.signal_sum += self.cycle * self.signal_str
-      print("".join(self.pixels))
-      self.pixels.clear()
 
     self.cycle += 1
 
@@ -28,13 +30,10 @@ class CathodeRayTube():
 
 
 computer = CathodeRayTube()
-input_lines = open('Input/test.txt').readlines()
+input_lines = open('Input/day10.txt').readlines()
 commands = []
 
 for line in input_lines:
   computer.read_instruction(line)
-
-a = 5
-for i in range(a-1, a+2): print(i)
 
 print(computer.signal_sum)
